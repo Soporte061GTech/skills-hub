@@ -73,11 +73,11 @@ function promptCheckboxList(title, items) {
       console.log('       SKILLS-HUB: Instalador Universal de Skills        ');
       console.log('========================================================\n');
       console.log(title);
-      console.log('(Usa [↑/↓] para moverte, [Espacio] para marcar/desmarcar, [A] para todos, [Enter] para continuar)\n');
+      console.log('(Usa [arriba/abajo] para moverte, [Espacio] para marcar, [A] para todos, [Enter] para continuar)\n');
 
       items.forEach((item, index) => {
         const isCursor = index === cursor ? '>' : ' ';
-        const box = checked[index] ? '[✔]' : '[ ]';
+        const box = checked[index] ? '[*]' : '[ ]';
         const label = typeof item === 'string' ? item : (item.name + ' (' + item.desc + ')');
         console.log(isCursor + ' ' + box + ' ' + label);
       });
@@ -131,20 +131,20 @@ async function main() {
   let selectedAgents = [];
 
   if (isAll) {
-    console.log('\n⚡ Modo no interactivo activado: Actualizando TODAS las skills en TODOS los agentes...\n');
+    console.log('\nActualizando todas las skills en todos los agentes configurados...\n');
     selectedSkills = skills;
     selectedAgents = TARGET_AGENTS;
   } else {
     const skillIndices = await promptCheckboxList('1. Selecciona las Skills a instalar:', skills);
     if (skillIndices.length === 0) {
-      console.log('No se seleccionó ninguna skill. Cancelando.');
+      console.log('No se selecciono ninguna skill. Operacion cancelada.');
       process.exit(0);
     }
     selectedSkills = skillIndices.map(i => skills[i]);
 
     const agentIndices = await promptCheckboxList('2. Selecciona los Agentes destino:', TARGET_AGENTS);
     if (agentIndices.length === 0) {
-      console.log('No se seleccionó ningún agente. Cancelando.');
+      console.log('No se selecciono ningun agente. Operacion cancelada.');
       process.exit(0);
     }
     selectedAgents = agentIndices.map(i => TARGET_AGENTS[i]);
@@ -161,21 +161,21 @@ async function main() {
       const targetSkillPath = path.join(destinationRoot, skillName);
       try {
         copyFolderRecursiveSync(sourceSkillPath, targetSkillPath);
-        console.log('✔ [' + agent.name + '] ' + skillName + ' -> ' + targetSkillPath);
+        console.log('[OK] [' + agent.name + '] ' + skillName + ' -> ' + targetSkillPath);
       } catch (err) {
-        console.error('❌ Error al copiar en ' + agent.name + ':', err.message);
+        console.error('[ERROR] Al copiar en ' + agent.name + ':', err.message);
       }
     }
   }
 
   console.log('\n========================================================');
-  console.log('🎉 ¡Proceso completado con éxito!');
-  console.log('Las skills están listas para usarse en tus agentes.');
+  console.log('Proceso completado exitosamente.');
+  console.log('Las skills estan listas para su uso en los agentes seleccionados.');
   console.log('========================================================\n');
   process.exit(0);
 }
 
 main().catch(err => {
-  console.error('Error durante la ejecución:', err);
+  console.error('Error durante la ejecucion:', err);
   process.exit(1);
 });

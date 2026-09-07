@@ -15,44 +15,44 @@ Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar o ac
 
 ---
 
-## 📦 Instalación Rápida (Elige tu método preferido)
+## Instalacion Rapida
 
-### Método 1: Con Node.js / NPX (Interactivo con casillas de verificación)
+### Metodo 1: Con Node.js / NPX
 En cualquier terminal (Windows, Linux o Mac):
 ```bash
 npx github:aquivalootro/skills-hub
 ```
-Te mostrará un menú interactivo en la terminal:
-- **Navegar:** Flechas `[↑]` y `[↓]`
-- **Marcar / Desmarcar:** Barra espaciadora `[Espacio]`
-- **Marcar / Desmarcar Todo:** Tecla `[A]`
-- **Confirmar:** Tecla `[Enter]`
+Instrucciones de navegacion en terminal:
+- Moverse: Teclas [arriba] y [abajo]
+- Marcar / Desmarcar: Barra [Espacio]
+- Seleccionar todo: Tecla [A]
+- Confirmar instalacion: Tecla [Enter]
 
 ---
 
-### Método 2: Enlace directo de PowerShell (Para Windows sin Node.js)
-Abre PowerShell y corre:
+### Metodo 2: Enlace directo de PowerShell (Windows sin Node.js)
+Abre PowerShell y ejecuta:
 ```powershell
 irm https://raw.githubusercontent.com/aquivalootro/skills-hub/main/install.ps1 | iex
 ```
 
 ---
 
-## 🔄 ¿Cómo Actualizar las Skills en Todos tus Agentes?
+## Actualizacion de Skills
 
-Cuando se publiquen cambios o mejoras en el repositorio, puedes actualizar de dos formas:
+Cuando se publiquen cambios en el repositorio, ejecuta:
 
-1. **Modo Automático (Actualiza todo en un solo clic):**
+1. Modo Automatico (Actualiza todo en un comando):
    ```bash
    npx github:aquivalootro/skills-hub update
    ```
-   *(Actualiza automáticamente todas las skills en todos los agentes instalados sin pedir confirmaciones).*
 
-2. **Modo Selectivo:**
-   Vuelve a ejecutar `npx github:aquivalootro/skills-hub` y marca únicamente las skills y agentes que desees refrescar.
+2. Modo Selectivo:
+   Vuelve a ejecutar `npx github:aquivalootro/skills-hub` y selecciona que skills o agentes actualizar.
+
 
 
 ---
 
-## 👤 Autor y Mantenimiento
-- **Autor de la skill:** `iaav`
+## Autor y Mantenimiento
+- Autor de la skill: iaav
