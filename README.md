@@ -17,43 +17,42 @@ Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar o ac
 
 ## 📦 Instalación Rápida (Elige tu método preferido)
 
-### Método 1: Con Node.js / NPX (Recomendado, interactivo con selector de agente)
+### Método 1: Con Node.js / NPX (Interactivo con casillas de verificación)
 En cualquier terminal (Windows, Linux o Mac):
-`ash
-npx https://github.com/TU_ORG_O_USUARIO/skills-hub install
-`
-El instalador te preguntará interactivamente:
-1. Qué skill deseas instalar (dba-soporte o Todas).
-2. A qué agente(s) deseas instalarla (**Antigravity**, **Claude**, **Codex**, **OpenCode** o **Todos**).
+```bash
+npx github:aquivalootro/skills-hub
+```
+Te mostrará un menú interactivo en la terminal:
+- **Navegar:** Flechas `[↑]` y `[↓]`
+- **Marcar / Desmarcar:** Barra espaciadora `[Espacio]`
+- **Marcar / Desmarcar Todo:** Tecla `[A]`
+- **Confirmar:** Tecla `[Enter]`
 
 ---
 
-### Método 2: Enlace directo de PowerShell (Para usuarios de Windows sin Node.js)
+### Método 2: Enlace directo de PowerShell (Para Windows sin Node.js)
 Abre PowerShell y corre:
-`powershell
-irm https://raw.githubusercontent.com/TU_ORG_O_USUARIO/skills-hub/main/install.ps1 | iex
-`
+```powershell
+irm https://raw.githubusercontent.com/aquivalootro/skills-hub/main/install.ps1 | iex
+```
 
 ---
 
-### Método 3: Instalación Local en desarrollo
-Si clonaste este repositorio en tu máquina:
-`ash
-cd skills-hub
-node bin/cli.js
-`
+## 🔄 ¿Cómo Actualizar las Skills en Todos tus Agentes?
 
----
+Cuando se publiquen cambios o mejoras en el repositorio, puedes actualizar de dos formas:
 
-## 🔄 ¿Cómo Actualizar las Skills?
-Cuando se suban mejoras al repositorio en GitHub (nuevos scripts o umbrales), el usuario solo debe volver a ejecutar el comando de instalación:
-`ash
-npx https://github.com/TU_ORG_O_USUARIO/skills-hub install
-`
-El instalador sobreescribe limpiamente los archivos de la skill seleccionada sin tocar nada más de la máquina.
+1. **Modo Automático (Actualiza todo en un solo clic):**
+   ```bash
+   npx github:aquivalootro/skills-hub update
+   ```
+   *(Actualiza automáticamente todas las skills en todos los agentes instalados sin pedir confirmaciones).*
+
+2. **Modo Selectivo:**
+   Vuelve a ejecutar `npx github:aquivalootro/skills-hub` y marca únicamente las skills y agentes que desees refrescar.
+
 
 ---
 
 ## 👤 Autor y Mantenimiento
 - **Autor de la skill:** `iaav`
-
