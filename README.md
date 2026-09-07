@@ -11,7 +11,8 @@ Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar o ac
 | Skill | Directorio | Descripción |
 | :--- | :--- | :--- |
 | **dba-soporte** | skills/dba-soporte/ | Diagnóstico de rendimiento, bloqueos, wait stats, planes de ejecución y triage de SQL Server 2019+. Modo cero acceso directo. |
-| *(futura)* | skills/... | Diseñado para albergar N skills adicionales del equipo. |
+| **demo-echo** | skills/demo-echo/ | Skill de prueba y verificación rápida. Permite comprobar en segundos que el agente carga correctamente las skills. |
+
 
 ---
 
