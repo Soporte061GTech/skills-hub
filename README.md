@@ -41,15 +41,16 @@ irm https://raw.githubusercontent.com/aquivalootro/skills-hub/main/install.ps1 |
 
 ## Actualizacion de Skills
 
-Cuando se publiquen cambios en el repositorio, ejecuta:
+Para buscar y aplicar actualizaciones de tus skills existentes:
+```bash
+npx github:aquivalootro/skills-hub update
+```
 
-1. Modo Automatico (Actualiza todo en un comando):
-   ```bash
-   npx github:aquivalootro/skills-hub update
-   ```
-
-2. Modo Selectivo:
-   Vuelve a ejecutar `npx github:aquivalootro/skills-hub` y selecciona que skills o agentes actualizar.
+Comportamiento:
+- Escanea unicamente las skills que ya tienes instaladas en tus agentes.
+- Si no hay cambios de version: te informa que todo esta al dia y no hace nada.
+- Si hay una version nueva: te muestra cuales cambiaron (ej. `v1.0.0 -> v1.1.0`) y te permite elegir interactivamente cuales actualizar.
+- NUNCA instalara skills nuevas que no hayas seleccionado previamente.
 
 
 

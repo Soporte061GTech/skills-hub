@@ -1,5 +1,6 @@
 ---
 name: dba-soporte
+version: 1.0.0
 author: iaav
 description: Skill de diagnóstico y evaluación de rendimiento para soporte técnico y DBAs en Microsoft SQL Server 2019+. Diseñada para ser agnóstica de agente y operar bajo un modelo de cero acceso directo a la base de datos (trabaja 100% con salidas, métricas, planes de ejecución o scripts que el usuario corre y pega en el chat). Rechaza tajantemente credenciales o conexiones directas. Analiza bloqueos, consultas lentas, consumo de CPU/I/O, salud global de la instancia (Wait Stats, PLE), fragmentación de índices, estadísticas desactualizadas y errores operativos frecuentes (deadlocks, timeouts, log lleno), entregando diagnósticos técnicos estructurados con nivel de confianza y propuestas para validación del DBA.
 ---
