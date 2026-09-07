@@ -1,0 +1,24 @@
+{
+  "name": "skills-hub",
+  "version": "1.0.0",
+  "description": "Instalador universal y catalogo de skills para agentes de IA",
+  "main": "bin/cli.js",
+  "bin": {
+    "skills-hub": "./bin/cli.js"
+  },
+  "keywords": [
+    "ai-agent",
+    "skills",
+    "antigravity",
+    "claude",
+    "codex",
+    "opencode",
+    "dba"
+  ],
+  "author": "iaav",
+  "license": "MIT",
+  "files": [
+    "bin",
+    "skills"
+  ]
+}
