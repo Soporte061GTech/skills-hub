@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
-// Codigos ANSI para colores en terminal (compatibles con Windows 10/11 y Linux/Mac)
 const colors = {
   reset: '\x1b[0m',
   bold: '\x1b[1m',
@@ -23,25 +22,29 @@ const TARGET_AGENTS = [
     id: 'antigravity',
     name: 'Google Antigravity (AGY)',
     desc: '%USERPROFILE%\.gemini\antigravity\skills',
-    getPath: () => path.join(USER_HOME, '.gemini', 'antigravity', 'skills')
+    getPath: () => path.join(USER_HOME, '.gemini', 'antigravity', 'skills'),
+    isDetected: () => fs.existsSync(path.join(USER_HOME, '.gemini'))
   },
   {
     id: 'claude',
     name: 'Claude (Claude Code / Desktop)',
     desc: '~/.claude/skills',
-    getPath: () => path.join(USER_HOME, '.claude', 'skills')
+    getPath: () => path.join(USER_HOME, '.claude', 'skills'),
+    isDetected: () => fs.existsSync(path.join(USER_HOME, '.claude'))
   },
   {
     id: 'codex',
     name: 'Codex / OpenAI Assistant',
     desc: '~/.codex/skills',
-    getPath: () => path.join(USER_HOME, '.codex', 'skills')
+    getPath: () => path.join(USER_HOME, '.codex', 'skills'),
+    isDetected: () => fs.existsSync(path.join(USER_HOME, '.codex'))
   },
   {
     id: 'opencode',
     name: 'OpenCode / Roo Code / Cursor',
     desc: '~/.opencode/skills',
-    getPath: () => path.join(USER_HOME, '.opencode', 'skills')
+    getPath: () => path.join(USER_HOME, '.opencode', 'skills'),
+    isDetected: () => fs.existsSync(path.join(USER_HOME, '.opencode')) || fs.existsSync(path.join(USER_HOME, '.cursor')) || fs.existsSync(path.join(USER_HOME, '.roo'))
   }
 ];
 
@@ -185,6 +188,46 @@ function promptCheckboxList(title, items, defaultCheckedIndices = null) {
   });
 }
 
+async function handleUninstall() {
+  console.clear();
+  console.log(colors.cyan + colors.bold + '========================================================' + colors.reset);
+  console.log(colors.cyan + colors.bold + '       SKILLS-HUB: Desinstalar Skills                    ' + colors.reset);
+  console.log(colors.cyan + colors.bold + '========================================================\n' + colors.reset);
+
+  const installedList = findInstalledSkills();
+  if (installedList.length === 0) {
+    console.log(colors.yellow + 'No se detectaron skills instaladas en ningun agente.\n' + colors.reset);
+    process.exit(0);
+  }
+
+  const items = installedList.map(item => ({
+    label: item.skillName + ' en ' + item.agent.name + ' (' + item.localPath + ')',
+    data: item
+  }));
+
+  const selectedIndices = await promptCheckboxList('Selecciona las skills que deseas ELIMINAR:', items, []);
+  if (selectedIndices.length === 0) {
+    console.log(colors.gray + 'No se selecciono ninguna skill para eliminar. Cancelando.\n' + colors.reset);
+    process.exit(0);
+  }
+
+  console.log(colors.red + '--------------------------------------------------------' + colors.reset);
+  console.log(colors.red + 'Eliminando skills seleccionadas...' + colors.reset);
+  console.log(colors.red + '--------------------------------------------------------\n' + colors.reset);
+
+  for (const idx of selectedIndices) {
+    const target = items[idx].data;
+    try {
+      fs.rmSync(target.localPath, { recursive: true, force: true });
+      console.log(colors.green + '[ELIMINADA] ' + colors.white + target.skillName + colors.gray + ' de ' + target.agent.name + colors.reset);
+    } catch (e) {
+      console.error(colors.red + '[ERROR] Al eliminar ' + target.skillName + ': ' + e.message + colors.reset);
+    }
+  }
+  console.log('\n' + colors.green + colors.bold + 'Proceso de desinstalacion finalizado.\n' + colors.reset);
+  process.exit(0);
+}
+
 async function handleUpdate() {
   console.clear();
   console.log(colors.cyan + colors.bold + '========================================================' + colors.reset);
@@ -194,7 +237,7 @@ async function handleUpdate() {
   const installedList = findInstalledSkills();
   if (installedList.length === 0) {
     console.log(colors.yellow + 'No se detectaron skills instaladas actualmente en el equipo.' + colors.reset);
-    console.log(colors.gray + 'Ejecuta sin argumentos para instalar una nueva skill: npx github:aquivalootro/skills-hub\n' + colors.reset);
+    console.log(colors.gray + 'Ejecuta sin argumentos para instalar: npx github:aquivalootro/skills-hub\n' + colors.reset);
     process.exit(0);
   }
 
@@ -262,7 +305,6 @@ async function handleInstall() {
     process.exit(1);
   }
 
-  // Identificar el estado de instalacion de cada skill para mostrarlo en pantalla
   const skillListItems = skills.map(skillName => {
     const installed = isSkillInstalledAnywhere(skillName);
     const version = getSkillVersion(path.join(SKILLS_DIR, skillName)) || '1.0.0';
@@ -273,13 +315,11 @@ async function handleInstall() {
     };
   });
 
-  // Por defecto marcar solo las NUEVAS (no instaladas)
   const defaultChecked = [];
   skillListItems.forEach((item, index) => {
     if (!item.installed) defaultChecked.push(index);
   });
   if (defaultChecked.length === 0) {
-    // Si todas ya estan instaladas, dejarlas seleccionables
     defaultChecked.push(0);
   }
 
@@ -290,12 +330,30 @@ async function handleInstall() {
   }
   const selectedSkills = skillIndices.map(i => skillListItems[i].name);
 
-  const agentIndices = await promptCheckboxList('2. Selecciona los Agentes destino:', TARGET_AGENTS);
+  // DETECCION DE AGENTES: Marcar por defecto SOLO los que existen en la maquina
+  const agentItems = TARGET_AGENTS.map(agent => {
+    const detected = agent.isDetected();
+    return {
+      agent,
+      detected,
+      label: agent.name + ' ' + (detected ? (colors.green + '[Detectado en equipo]' + colors.reset) : (colors.gray + '[No detectado]' + colors.reset)) + colors.gray + ' (' + agent.desc + ')' + colors.reset
+    };
+  });
+
+  const defaultCheckedAgents = [];
+  agentItems.forEach((item, index) => {
+    if (item.detected) defaultCheckedAgents.push(index);
+  });
+  if (defaultCheckedAgents.length === 0) {
+    defaultCheckedAgents.push(0); // Si no se detecto ninguno, sugerir el primero
+  }
+
+  const agentIndices = await promptCheckboxList('2. Selecciona los Agentes destino:', agentItems, defaultCheckedAgents);
   if (agentIndices.length === 0) {
     console.log(colors.yellow + 'No se selecciono ningun agente. Operacion cancelada.\n' + colors.reset);
     process.exit(0);
   }
-  const selectedAgents = agentIndices.map(i => TARGET_AGENTS[i]);
+  const selectedAgents = agentIndices.map(i => agentItems[i].agent);
 
   console.log(colors.cyan + '--------------------------------------------------------' + colors.reset);
   console.log(colors.cyan + 'Instalando skills seleccionadas...' + colors.reset);
@@ -325,8 +383,11 @@ async function handleInstall() {
 async function main() {
   const args = process.argv.slice(2);
   const isUpdate = args.includes('update') || args.includes('--update') || args.includes('-u');
+  const isUninstall = args.includes('uninstall') || args.includes('remove') || args.includes('rm');
 
-  if (isUpdate) {
+  if (isUninstall) {
+    await handleUninstall();
+  } else if (isUpdate) {
     await handleUpdate();
   } else {
     await handleInstall();

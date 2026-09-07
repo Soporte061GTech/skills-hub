@@ -52,6 +52,19 @@ Comportamiento:
 - Si hay una version nueva: te muestra cuales cambiaron (ej. `v1.0.0 -> v1.1.0`) y te permite elegir interactivamente cuales actualizar.
 - NUNCA instalara skills nuevas que no hayas seleccionado previamente.
 
+---
+
+## Desinstalacion de Skills
+
+Para eliminar una o varias skills de tus agentes:
+```bash
+npx github:aquivalootro/skills-hub uninstall
+```
+- Muestra unicamente las skills que estan instaladas en tus agentes.
+- Seleccionas con `[Espacio]` las que deseas borrar y presionas `[Enter]`.
+- Elimina limpiamente la carpeta del agente sin tocar otros archivos.
+
+
 
 
 ---
