@@ -1,7 +1,6 @@
-﻿---
+---
 name: demo-echo
 version: 1.0.0
-author: iaav
 description: Skill de prueba y diagnostico rapido para verificar la correcta instalacion y actualizacion de skills en el agente. Responde inmediatamente con un saludo formal, el timestamp actual y el estado de los componentes.
 ---
 

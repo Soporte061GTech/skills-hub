@@ -62,4 +62,5 @@ npx github:TU-ORGANIZACION/skills-hub uninstall
 ---
 
 ## Autor y Mantenimiento
-- Autor de la skill: iaav
+- Autor del instalador y proceso de despliegue: iaav
+
