@@ -18,11 +18,11 @@ Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar o ac
 
 ## Instalacion Rapida
 
-### Metodo 1: Con Node.js / NPX
 En cualquier terminal (Windows, Linux o Mac):
 ```bash
-npx github:aquivalootro/skills-hub
+npx github:TU-ORGANIZACION/skills-hub
 ```
+
 Instrucciones de navegacion en terminal:
 - Moverse: Teclas [arriba] y [abajo]
 - Marcar / Desmarcar: Barra [Espacio]
@@ -31,19 +31,11 @@ Instrucciones de navegacion en terminal:
 
 ---
 
-### Metodo 2: Enlace directo de PowerShell (Windows sin Node.js)
-Abre PowerShell y ejecuta:
-```powershell
-irm https://raw.githubusercontent.com/aquivalootro/skills-hub/main/install.ps1 | iex
-```
-
----
-
 ## Actualizacion de Skills
 
 Para buscar y aplicar actualizaciones de tus skills existentes:
 ```bash
-npx github:aquivalootro/skills-hub update
+npx github:TU-ORGANIZACION/skills-hub update
 ```
 
 Comportamiento:
@@ -58,7 +50,7 @@ Comportamiento:
 
 Para eliminar una o varias skills de tus agentes:
 ```bash
-npx github:aquivalootro/skills-hub uninstall
+npx github:TU-ORGANIZACION/skills-hub uninstall
 ```
 - Muestra unicamente las skills que estan instaladas en tus agentes.
 - Seleccionas con `[Espacio]` las que deseas borrar y presionas `[Enter]`.

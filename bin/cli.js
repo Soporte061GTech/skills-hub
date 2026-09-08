@@ -339,7 +339,7 @@ async function handleUpdate() {
   const installedList = findInstalledSkills(true);
   if (installedList.length === 0) {
     console.log(colors.yellow + 'No se detectaron skills de este catalogo instaladas en el equipo.' + colors.reset);
-    console.log(colors.gray + 'Ejecuta sin argumentos para instalar: npx github:aquivalootro/skills-hub\n' + colors.reset);
+    console.log(colors.gray + 'Ejecuta sin argumentos para instalar: npx github:TU-ORGANIZACION/skills-hub\n' + colors.reset);
     process.exit(0);
   }
 
