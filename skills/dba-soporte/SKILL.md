@@ -1,7 +1,7 @@
----
+﻿---
 name: dba-soporte
-version: 1.0.0
-description: Skill de diagnóstico y evaluación de rendimiento para soporte técnico y DBAs en Microsoft SQL Server 2019+. Diseñada para ser agnóstica de agente y operar bajo un modelo de cero acceso directo a la base de datos (trabaja 100% con salidas, métricas, planes de ejecución o scripts que el usuario corre y pega en el chat). Rechaza tajantemente credenciales o conexiones directas. Analiza bloqueos, consultas lentas, consumo de CPU/I/O, salud global de la instancia (Wait Stats, PLE), fragmentación de índices, estadísticas desactualizadas y errores operativos frecuentes (deadlocks, timeouts, log lleno), entregando diagnósticos técnicos estructurados con nivel de confianza y propuestas para validación del DBA.
+version: 1.1.0
+description: Skill de diagnóstico y evaluación de rendimiento para soporte técnico y DBAs en Microsoft SQL Server 2019+. Diseñada para ser agnóstica de agente y operar bajo un modelo de cero acceso directo a la base de datos (trabaja 100% con salidas, métricas, planes de ejecución o scripts que el usuario corre y pega en el chat). Rechaza tajantemente credenciales o conexiones directas. Analiza bloqueos, consultas lentas, consumo de CPU/I/O, salud global de la instancia (Wait Stats, PLE), fragmentación de índices, estadísticas desactualizadas, errores operativos frecuentes (deadlocks, timeouts, log lleno) y genera reportes consolidados en Markdown cuando se le solicite, entregando diagnósticos técnicos estructurados con nivel de confianza y propuestas para validación del DBA.
 ---
 
 # DBA de Soporte y Diagnóstico de Rendimiento — SQL Server 2019+
@@ -87,40 +87,55 @@ Cuando soporte tiene un script de mantenimiento o migración antes de correrlo:
 
 ---
 
-## 📋 FORMATO OBLIGATORIO DE RESPUESTA / REPORTE
+## 📑 GENERADOR DE REPORTE DE DIAGNÓSTICO (A SOLICITUD DEL USUARIO)
 
-Para diagnósticos de rendimiento o análisis de consultas, responder obligatoriamente con esta estructura:
+Cuando el usuario escriba o solicite explícitamente:
+- **generación de reporte de diagnóstico** (o frases equivalentes como *generar reporte*, *dame el reporte de la sesión*, *reporte técnico final*),
+
+El agente **DEBE compilar y entregar un único artefacto/bloque Markdown formal, completo y autocontenido**, estructurando la totalidad de lo visto en la sesión.
+
+### Estructura Mandatoria del Reporte de Diagnóstico
 
 `markdown
-# Reporte de Diagnóstico — DBA de Soporte
+# Reporte de Diagnóstico Técnico — SQL Server
+**Generado por:** Asistente DBA de Rendimiento  
+**Fecha/Sesión:** [Fecha actual o contexto de la sesión]  
+**Estado del Diagnóstico:** [CERRADO / SOLUCIÓN APLICADA | PENDIENTE DE VALIDACIÓN DBA | INFORMACIÓN ADICIONAL REQUERIDA]
 
-## 1. Conclusión Ejecutiva
-[Resumen en lenguaje claro y accesible para soporte y negocio sobre la causa raíz aparente]
+---
 
-## 2. ¿Qué está ocurriendo?
-[Explicación técnica de la mecánica interna de SQL Server: qué hace el motor desde que recibe la solicitud hasta que entrega el resultado]
+## 1. Planteamiento de la Situación y Datos del Problema
+- **Problema reportado:** [Descripción clara de lo que reportó el usuario inicialmente: síntomas, tiempos observados, afectación].
+- **Objeto / Entorno involucrado:** [Nombre del SP, Vista, Consulta o Base de Datos evaluada].
+- **Comportamiento esperado vs observado:** [Ej. Se esperaba ejecución sub-segundo, pero tardó 14s para 1 fila].
 
-## 3. Análisis de Evidencia
-- **Filas procesadas vs Filas devueltas:** [Comparativa entre Estimated Rows, Actual Rows y Rows devueltas al cliente]
-- **Operadores costosos / Cuellos de botella:** [Mapeo de Scans, Lookups, Sorts o esperas de Recursos/Locks detectadas]
-- **Sargabilidad y Tipos de Datos:** [Conversiones implícitas, funciones en el WHERE/JOIN]
+## 2. Evidencia Compartida por el Usuario
+[Resumen fiel y concreto de los datos y salidas que el usuario pegó o compartió durante la sesión]
+- **Consultas o Scripts ejecutados:** [Texto de las queries analizadas].
+- **Métricas observadas:** [Resultados de STATISTICS IO, TIME, salidas de sp_MonitoreoSQL o datos del plan de ejecución].
 
-## 4. Clasificación del Diagnóstico Preliminar
-- **Categoría:** [PROBLEMA DE CONSULTA | PROBLEMA DEL OBJETO | PROBLEMA DE ÍNDICES | PROBLEMA DE ESTADÍSTICAS | PROBLEMA DE PLAN / PARAMETER SNIFFING | POSIBLE BLOQUEO / ESPERAS | PROBLEMA DE DISEÑO | INFORMACIÓN INSUFICIENTE]
-- **Nivel de Confianza:** [ALTO | MEDIO | BAJO] — [Justificación del nivel asignado]
+## 3. Análisis Técnico y Situaciones Detectadas
+[Diagnóstico de la mecánica interna de SQL Server realizado por el agente]
+- **Causa Raíz Identificada:** [Explicación técnica concreta: predicado no sargable, estadísticas desactualizadas, contención por bloqueos, scans masivos, spills en TempDB, etc.].
+- **Relación de Filas / Recursos:** [Filas estimadas vs reales, lecturas lógicas observadas, consumo de CPU].
+- **Operadores Críticos:** [Identificación de operadores costosos en el plan o esperas predominantes].
 
-## 5. Acciones Recomendadas y Propuestas
-### Para el Ejecutivo / Soporte Nivel 1:
-- [Acciones operativas, mitigación o validación funcional]
+## 4. Clasificación del Diagnóstico
+- **Categoría:** [PROBLEMA DE CONSULTA | PROBLEMA DEL OBJETO | PROBLEMA DE ÍNDICES | PROBLEMA DE ESTADÍSTICAS | PROBLEMA DE PLAN / PARAMETER SNIFFING | POSIBLE BLOQUEO / ESPERAS | PROBLEMA DE DISEÑO]
+- **Nivel de Confianza:** [ALTO | MEDIO | BAJO] — [Justificación del nivel]
 
-### Para el DBA / Administrador (PROPUESTA PARA VALIDACIÓN DEL DBA):
-- [Recomendaciones técnicas acotadas al objeto puntual]
-\\\sql
--- Script T-SQL sugerido para prueba en ambiente no productivo
-\\\
+## 5. Resultado Final y Solución Concretada
+[Detalle de la resolución alcanzada o recomendación final acordada en la sesión]
+- **Si se concretó solución en la sesión:**
+  - Explicar la corrección realizada (ej. reescritura de consulta sargable, ajuste de parámetros).
+  - Comparativa de resultado / beneficio obtenido.
+- **Si queda como propuesta para el DBA:**
+  - Encabezar con: PROPUESTA PARA VALIDACIÓN DEL DBA
+  - Incluir el script T-SQL acotado para pruebas en ambientes no productivos.
 
-## 6. Información Faltante
-[Detalle exacto de qué métricas adicionales o planes se requieren si el nivel de confianza es Medio o Bajo]
+## 6. Próximos Pasos y Recomendaciones Preventivas
+- **Para Soporte L1/L2:** [Acciones operativas o monitoreo funcional posterior].
+- **Para el DBA:** [Monitoreo de regresión, revisión de índices relacionados o mantenimiento].
 `
 
 ---
