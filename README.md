@@ -1,66 +1,47 @@
-# SKILLS-HUB — Catálogo e Instalador de Skills para Agentes de IA
+# Central de Skills para Agentes de IA (Skills Hub)
 
-Catálogo centralizado de skills especializadas para agentes de Inteligencia Artificial (**Google Antigravity**, **Claude**, **Codex / OpenAI**, **OpenCode / Roo Code / Cursor**).
+Este repositorio contiene una coleccion de "Skills" (habilidades) empaquetadas para potenciar Agentes de Inteligencia Artificial (como Antigravity, Claude, etc.). 
 
-Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar o actualizar skills en su agente con **un solo comando**, sin riesgo de alterar configuraciones locales ni rutas complejas.
+Las skills dotan a los agentes de flujos de trabajo especificos, reglas de seguridad y conocimientos tecnicos avanzados sin necesidad de configuraciones manuales.
 
----
+## 🚀 Instalacion Rapida
 
-## 🚀 Catálogo de Skills Disponibles
+No necesitas descargar ni clonar este repositorio manualmente. Puedes instalar, actualizar o desinstalar las skills directamente en los entornos de tus agentes utilizando el instalador interactivo via `npx`.
 
-| Skill | Directorio | Descripción |
-| :--- | :--- | :--- |
-| **dba-soporte** | skills/dba-soporte/ | Diagnóstico de rendimiento, bloqueos, wait stats, planes de ejecución y triage de SQL Server 2019+. Modo cero acceso directo. |
-| **demo-echo** | skills/demo-echo/ | Skill de prueba y verificación rápida. Permite comprobar en segundos que el agente carga correctamente las skills. |
+Abre tu terminal y ejecuta:
 
-
----
-
-## Instalacion Rapida
-
-En cualquier terminal (Windows, Linux o Mac):
 ```bash
-npx github:TU-ORGANIZACION/skills-hub
+npx github:MiOrganizacion/skills-hub
 ```
 
-Instrucciones de navegacion en terminal:
-- Moverse: Teclas [arriba] y [abajo]
-- Marcar / Desmarcar: Barra [Espacio]
-- Seleccionar todo: Tecla [A]
-- Confirmar instalacion: Tecla [Enter]
+Se abrira un asistente interactivo que detectara tus agentes instalados y te permitira seleccionar que skills deseas agregar o remover.
 
 ---
 
-## Actualizacion de Skills
+## 🛠 Skills Disponibles
 
-Para buscar y aplicar actualizaciones de tus skills existentes:
-```bash
-npx github:TU-ORGANIZACION/skills-hub update
-```
+### 1. DBA Soporte (`dba-soporte` v1.3.0)
+Transforma a tu agente en un **Asistente DBA Senior Interactivo** especializado en Microsoft SQL Server. 
 
-Comportamiento:
-- Escanea unicamente las skills que ya tienes instaladas en tus agentes.
-- Si no hay cambios de version: te informa que todo esta al dia y no hace nada.
-- Si hay una version nueva: te muestra cuales cambiaron (ej. `v1.0.0 -> v1.1.0`) y te permite elegir interactivamente cuales actualizar.
-- NUNCA instalara skills nuevas que no hayas seleccionado previamente.
+Esta skill funciona como una **Maquina de Estados**, guiando al usuario a traves de un diagnostico seguro y libre de riesgos. Esta diseñada bajo una estricta politica de **Zero-Trust (Cero Acceso)**: el agente nunca se conectara a la base de datos ni pedira credenciales.
 
----
+#### ¿Como usarla?
 
-## Desinstalacion de Skills
+El agente es inteligente y se adaptara a la informacion que le des:
 
-Para eliminar una o varias skills de tus agentes:
-```bash
-npx github:TU-ORGANIZACION/skills-hub uninstall
-```
-- Muestra unicamente las skills que estan instaladas en tus agentes.
-- Seleccionas con `[Espacio]` las que deseas borrar y presionas `[Enter]`.
-- Elimina limpiamente la carpeta del agente sin tocar otros archivos.
+*   **Modo Triage (Diagnostico Guiado):** 
+    Si no sabes que ocurre, simplemente dile al agente: *"El servidor esta lento"* o *"Tengo un problema de timeout"*. El agente tomara el control, te preguntara tu version de SQL Server y te entregara scripts inofensivos (lectura de catalogos) para que los ejecutes y le pegues los resultados, guiandote paso a paso hasta encontrar la causa raiz.
+*   **Modo Quirurgico (Experto):** 
+    Si ya tienes aislado el problema, pega directamente el Query problematico y el XML del Plan de Ejecucion. El agente saltara la fase de entrevistas e ira directo al analisis tecnico exhaustivo (Sargabilidad, Estimacion de filas, TempDB Spills, etc.).
+*   **Generador de Reportes:**
+    En cualquier momento de la sesion, puedes escribirle al agente: **`Genera el reporte de diagnostico`**. El agente compilara toda la evidencia, el analisis y la solucion en un documento formal en formato Markdown (`.md`), listo para ser adjuntado a tu ticket de soporte.
 
-
-
+### 2. Demo Echo (`demo-echo`)
+Skill de prueba ligera utilizada unicamente para validar que el proceso de instalacion y actualizacion mediante el comando `npx` funciona correctamente en tu equipo.
 
 ---
 
-## Autor y Mantenimiento
-- Autor del instalador y proceso de despliegue: iaav
-
+## 🔒 Politicas de Seguridad Integradas
+Todas las skills de administracion (como `dba-soporte`) estan configuradas con limites duros:
+- **Cero Modificaciones:** Nunca sugeriran ejecutar sentencias `UPDATE`, `INSERT`, `DELETE` o `DROP` de forma automatica para "arreglar" un problema.
+- **Evidencia Local:** Todo el analisis se basa en la salida de texto (Planes XML, STATISTICS IO) que el usuario decide pegar en el chat.
