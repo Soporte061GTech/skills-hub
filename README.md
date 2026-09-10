@@ -19,34 +19,12 @@ No necesitas descargar ni clonar este repositorio manualmente. Puedes instalar, 
 
 La skill `dba-soporte` transforma al agente de IA en un **Asistente DBA Senior Interactivo** enfocado en apoyar al personal de soporte técnico (L1/L2), asesores y desarrolladores para resolver problemas de lentitud e incidentes de base de datos con rigor profesional.
 
-```
-                      FLUJO DE DIAGNÓSTICO CLÍNICO
-                      
-  [Incidente Reportado]
-           │
-           ▼
-  ┌────────────────────────────────────────────────────────┐
-  │ FASE 1: Triage y Objeto                                │
-  │ Identifica síntoma, versión SQL Server y tipo de objeto│
-  └────────────────────────┬───────────────────────────────┘
-                           │
-                           ▼
-  ┌────────────────────────────────────────────────────────┐
-  │ FASE 2: Recolección de Evidencia Segura (Desconectada) │
-  │ DDL del Objeto, Query exacto, STATISTICS IO/TIME, Plan │
-  └────────────────────────┬───────────────────────────────┘
-                           │
-                           ▼
-  ┌────────────────────────────────────────────────────────┐
-  │ FASE 3: Análisis Exhaustivo (13 Objetivos DBA)         │
-  │ Filas estimadas vs reales, Sargabilidad, Spills, Sorts │
-  └────────────────────────┬───────────────────────────────┘
-                           │
-                           ▼
-  ┌────────────────────────────────────────────────────────┐
-  │ FASE 4: Resolución y Reporte Oficial (13 Secciones)    │
-  │ Plan de trabajo escalonado: Soporte L1/L2 vs DBA       │
-  └────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A["🚨 Incidente Reportado<br><i>(Lentitud, Timeout, Bloqueo)</i>"] --> B["🩺 FASE 1: Triage y Objeto<br>• Identifica síntoma y tipo de objeto (Vista, SP, Query, UDF)<br>• Valida versión exacta de SQL Server"]
+    B --> C["📋 FASE 2: Recolección de Evidencia Segura<br>• DDL del objeto y consulta exacta<br>• Salida de SET STATISTICS IO, TIME ON<br>• Plan de ejecución real (.sqlplan / XML)"]
+    C --> D["🔬 FASE 3: Análisis Exhaustivo (13 Objetivos DBA)<br>• Filas estimadas vs reales (Desvío cardinalidad)<br>• Sargabilidad y conversiones implícitas<br>• Spills a TempDB, Sorts y Scans masivos"]
+    D --> E["📑 FASE 4: Resolución y Reporte Oficial<br>• 1° Actualización de estadísticas<br>• 2° Optimización de código / sargabilidad<br>• 3° Propuesta de índices para validación DBA<br>• 4° Rebuild al final en Ventana de Mantenimiento"]
 ```
 
 ### 🎯 1. Alcance Universal de Objetos
