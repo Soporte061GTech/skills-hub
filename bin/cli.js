@@ -45,6 +45,13 @@ const TARGET_AGENTS = [
     desc: '~/.opencode/skills',
     getPath: () => path.join(USER_HOME, '.opencode', 'skills'),
     isDetected: () => fs.existsSync(path.join(USER_HOME, '.opencode')) || fs.existsSync(path.join(USER_HOME, '.cursor')) || fs.existsSync(path.join(USER_HOME, '.roo'))
+  },
+  {
+    id: 'kilocode',
+    name: 'Kilo Code',
+    desc: '~/.kilo/skills',
+    getPath: () => path.join(USER_HOME, '.kilo', 'skills'),
+    isDetected: () => fs.existsSync(path.join(USER_HOME, '.kilo')) || fs.existsSync(path.join(USER_HOME, '.config', 'kilo'))
   }
 ];
 
