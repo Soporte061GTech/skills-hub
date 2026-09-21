@@ -68,6 +68,39 @@ function getManagedSkillNames() {
   return Array.from(names);
 }
 
+function ensureAntigravityGlobalConfig(skillsDir) {
+  try {
+    const configDir = path.join(USER_HOME, '.gemini', 'config');
+    if (!fs.existsSync(configDir)) {
+      fs.mkdirSync(configDir, { recursive: true });
+    }
+    const skillsJsonPath = path.join(configDir, 'skills.json');
+    let config = { entries: [] };
+    if (fs.existsSync(skillsJsonPath)) {
+      try {
+        config = JSON.parse(fs.readFileSync(skillsJsonPath, 'utf8')) || { entries: [] };
+        if (!Array.isArray(config.entries)) config.entries = [];
+      } catch (e) {
+        config = { entries: [] };
+      }
+    }
+    const pathsToAdd = [
+      skillsDir,
+      path.join(skillsDir, 'dbtools-portable', 'skills')
+    ];
+    let changed = false;
+    for (const p of pathsToAdd) {
+      if (!config.entries.some(e => e.path === p)) {
+        config.entries.push({ path: p });
+        changed = true;
+      }
+    }
+    if (changed) {
+      fs.writeFileSync(skillsJsonPath, JSON.stringify(config, null, 2) + '\n', 'utf8');
+    }
+  } catch (e) {}
+}
+
 function copyFolderRecursiveSync(source, target) {
   if (!fs.existsSync(target)) {
     fs.mkdirSync(target, { recursive: true });
@@ -462,6 +495,9 @@ async function handleInstall() {
 
   for (const agent of selectedAgents) {
     const destinationRoot = agent.getPath();
+    if (agent.id === 'antigravity') {
+      ensureAntigravityGlobalConfig(destinationRoot);
+    }
     for (const skillName of selectedSkills) {
       const sourceSkillPath = path.join(SKILLS_DIR, skillName);
       const targetSkillPath = path.join(destinationRoot, skillName);
