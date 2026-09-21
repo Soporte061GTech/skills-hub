@@ -21,8 +21,8 @@ const TARGET_AGENTS = [
   {
     id: 'antigravity',
     name: 'Google Antigravity (AGY)',
-    desc: '%USERPROFILE%\.gemini\antigravity\skills',
-    getPath: () => path.join(USER_HOME, '.gemini', 'antigravity', 'skills'),
+    desc: '%USERPROFILE%\\.gemini\\config\\plugins\\skills-hub\\skills',
+    getPath: () => path.join(USER_HOME, '.gemini', 'config', 'plugins', 'skills-hub', 'skills'),
     isDetected: () => fs.existsSync(path.join(USER_HOME, '.gemini'))
   },
   {
@@ -469,6 +469,18 @@ async function handleInstall() {
 
   for (const agent of selectedAgents) {
     const destinationRoot = agent.getPath();
+    if (agent.id === 'antigravity') {
+      const pluginDir = path.dirname(destinationRoot);
+      const pluginJsonPath = path.join(pluginDir, 'plugin.json');
+      if (!fs.existsSync(pluginJsonPath)) {
+        fs.mkdirSync(pluginDir, { recursive: true });
+        fs.writeFileSync(pluginJsonPath, JSON.stringify({
+          name: 'skills-hub',
+          version: '1.0.0',
+          description: 'Catalogo corporativo de skills para agentes de IA'
+        }, null, 2) + '\n', 'utf8');
+      }
+    }
     for (const skillName of selectedSkills) {
       const sourceSkillPath = path.join(SKILLS_DIR, skillName);
       const targetSkillPath = path.join(destinationRoot, skillName);

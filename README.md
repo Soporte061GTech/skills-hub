@@ -106,7 +106,7 @@ npx github:TU-ORGANIZACION/skills-hub uninstall
 
 | Agente de IA | Entorno de Ejecución | Ruta de Instalación Global |
 | :--- | :--- | :--- |
-| **Google Antigravity (AGY)** | IDE / Antigravity 2.0 / CLI (`agy`) | `%USERPROFILE%\.gemini\antigravity\skills\` |
+| **Google Antigravity (AGY)** | IDE / Antigravity 2.0 / CLI (`agy`) | `%USERPROFILE%\.gemini\config\plugins\skills-hub\skills\` |
 | **Claude** | Claude Code / Claude Desktop | `~/.claude/skills/` |
 | **Codex** | Codex CLI / OpenAI Assistant | `~/.codex/skills/` |
 | **OpenCode** | OpenCode / Roo Code / Cursor | `~/.opencode/skills/` |
