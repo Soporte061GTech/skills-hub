@@ -11,6 +11,7 @@ No necesitas descargar ni clonar este repositorio manualmente. Puedes instalar, 
 | Skill | Directorio | Versión | Descripción y Alcance |
 | :--- | :--- | :---: | :--- |
 | **dba-soporte** | `skills/dba-soporte/` | **v1.4.0** | Asistente DBA Senior Interactivo para diagnóstico clínico de rendimiento en **Microsoft SQL Server**. Guía a ejecutivos y soporte paso a paso con seguridad Zero-Trust y reporte ejecutivo de 13 secciones. |
+| **dbtools-portable** | `skills/dbtools-portable/` | **v1.0.0** | Suite portable con 5 roles especializados (developer, administrator, tuning, audit/security, data-analyst) y orquestador para **Microsoft SQL Server** (Standard/Enterprise). |
 | **demo-echo** | `skills/demo-echo/` | **v1.0.0** | Skill de verificación rápida. Permite comprobar en segundos que el agente carga e interpreta correctamente el entorno de skills. |
 
 ---
