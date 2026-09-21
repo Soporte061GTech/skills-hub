@@ -1,6 +1,6 @@
 # Central de Skills para Agentes de IA (Skills Hub)
 
-Catálogo centralizado e instalador interactivo de skills especializadas para agentes de Inteligencia Artificial (**Google Antigravity**, **Claude**, **Codex / OpenAI**, **OpenCode / Roo Code / Cursor**).
+Catálogo centralizado e instalador interactivo de skills especializadas para agentes de Inteligencia Artificial (**Google Antigravity**, **Claude**, **Codex / OpenAI**, **OpenCode / Roo Code / Cursor**, **Kilo Code**).
 
 Diseñado para que cualquier usuario de soporte o desarrollo pueda instalar, actualizar y gestionar habilidades avanzadas en sus agentes locales con **un solo comando**, sin riesgo de alterar configuraciones ni rutas complejas.
 
@@ -99,6 +99,18 @@ npx github:TU-ORGANIZACION/skills-hub uninstall
 ```
 - Permite desinstalar por skill completa o por agente específico.
 - Elimina limpiamente la carpeta correspondiente sin alterar otras configuraciones.
+
+---
+
+## 🤖 Agentes Soportados y Rutas de Despliegue
+
+| Agente de IA | Entorno de Ejecución | Ruta de Instalación Global |
+| :--- | :--- | :--- |
+| **Google Antigravity (AGY)** | IDE / Antigravity 2.0 / CLI (`agy`) | `%USERPROFILE%\.gemini\antigravity\skills\` |
+| **Claude** | Claude Code / Claude Desktop | `~/.claude/skills/` |
+| **Codex** | Codex CLI / OpenAI Assistant | `~/.codex/skills/` |
+| **OpenCode** | OpenCode / Roo Code / Cursor | `~/.opencode/skills/` |
+| **Kilo Code** | Kilo Code CLI / Kilo Extension | `~/.kilo/skills/` |
 
 ---
 
